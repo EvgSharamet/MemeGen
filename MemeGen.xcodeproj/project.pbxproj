@@ -11,6 +11,8 @@
 		859CAAE62808869800CB232D /* FontsReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE52808869800CB232D /* FontsReference.swift */; };
 		859CAAE82808885200CB232D /* ImageCatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE72808885200CB232D /* ImageCatalogCell.swift */; };
 		859CAAEA28088F4400CB232D /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE928088F4400CB232D /* ColorExtensions.swift */; };
+		859CAAEC280988F800CB232D /* ImageFullScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAEB280988F800CB232D /* ImageFullScreenController.swift */; };
+		859CAAEE2809895C00CB232D /* ImageFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAED2809895B00CB232D /* ImageFullScreenView.swift */; };
 		85E8B4D42808679100C0D468 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4D32808679100C0D468 /* AppDelegate.swift */; };
 		85E8B4D62808679100C0D468 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4D52808679100C0D468 /* SceneDelegate.swift */; };
 		85E8B4DE2808679100C0D468 /* MemeGen.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4DC2808679100C0D468 /* MemeGen.xcdatamodeld */; };
@@ -26,6 +28,8 @@
 		859CAAE52808869800CB232D /* FontsReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsReference.swift; sourceTree = "<group>"; };
 		859CAAE72808885200CB232D /* ImageCatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCatalogCell.swift; sourceTree = "<group>"; };
 		859CAAE928088F4400CB232D /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		859CAAEB280988F800CB232D /* ImageFullScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenController.swift; sourceTree = "<group>"; };
+		859CAAED2809895B00CB232D /* ImageFullScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenView.swift; sourceTree = "<group>"; };
 		85E8B4D02808679100C0D468 /* MemeGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85E8B4D32808679100C0D468 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85E8B4D52808679100C0D468 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 			children = (
 				85E8B4EA2808687E00C0D468 /* MainNavigationController.swift */,
 				85E8B4ED2808694200C0D468 /* ImageCatalogController.swift */,
+				859CAAEB280988F800CB232D /* ImageFullScreenController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -106,6 +111,7 @@
 				85E8B4F328086D8400C0D468 /* ImageCatalogView.swift */,
 				859CAAE52808869800CB232D /* FontsReference.swift */,
 				859CAAE72808885200CB232D /* ImageCatalogCell.swift */,
+				859CAAED2809895B00CB232D /* ImageFullScreenView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -192,10 +198,12 @@
 				85E8B4EB2808687E00C0D468 /* MainNavigationController.swift in Sources */,
 				859CAAE42808816A00CB232D /* ViewExtensions.swift in Sources */,
 				85E8B4D42808679100C0D468 /* AppDelegate.swift in Sources */,
+				859CAAEE2809895C00CB232D /* ImageFullScreenView.swift in Sources */,
 				859CAAE82808885200CB232D /* ImageCatalogCell.swift in Sources */,
 				85E8B4DE2808679100C0D468 /* MemeGen.xcdatamodeld in Sources */,
 				85E8B4D62808679100C0D468 /* SceneDelegate.swift in Sources */,
 				85E8B4F428086D8400C0D468 /* ImageCatalogView.swift in Sources */,
+				859CAAEC280988F800CB232D /* ImageFullScreenController.swift in Sources */,
 				85E8B4EE2808694200C0D468 /* ImageCatalogController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
