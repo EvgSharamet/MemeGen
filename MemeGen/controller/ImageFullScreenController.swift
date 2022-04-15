@@ -14,5 +14,6 @@ class ImageFullScreenController: UIViewController {
         let view = ImageFullScreenView()
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
+        view.stretch()
     }
 }

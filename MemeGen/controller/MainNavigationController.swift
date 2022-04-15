@@ -15,5 +15,8 @@ class MainNavigationController: UINavigationController {
         super.viewDidLoad()
         let collectionWindow = ImageCatalogController()
         pushViewController(collectionWindow, animated: true)
+        
+        let imageFullWindow = ImageFullScreenController()
+        pushViewController(imageFullWindow, animated: true)
     }
 }
