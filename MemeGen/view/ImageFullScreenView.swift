@@ -11,6 +11,7 @@ import UIKit
 class ImageFullScreenView: UIView {
     let fullImageView = UIImageView()
     let blurView = UIView()
+    let generateButton = UIButton()
     
     init() {
         super.init(frame: .zero)
@@ -27,6 +28,7 @@ class ImageFullScreenView: UIView {
         setupBlackoutScreen()
         setupCenterBlurView()
         setupCenterStackView()
+        setupGenerateButton()
     }
     
     func setupFullScreenView() {
@@ -107,6 +109,24 @@ class ImageFullScreenView: UIView {
         bottomTextField.setLeftPaddingPoints(10)
         bottomTextField.layer.cornerRadius = 10
         bottomTextField.backgroundColor = .white
+    }
+    
+    func setupGenerateButton() {
+        self.addSubview(generateButton)
+        generateButton.translatesAutoresizingMaskIntoConstraints = false
+        generateButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        generateButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+        generateButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        generateButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        generateButton.layer.masksToBounds = true
+        generateButton.layer.cornerRadius = 15
+        generateButton.backgroundColor = UIColor(
+            red: 123 / 255,
+            green: 36 / 255,
+            blue: 27 / 255,
+            alpha: 1)
+        generateButton.setTitle("GENERATE", for: .normal)
+        generateButton.titleLabel?.font = UIConst.fullScreenTopBottomLabelFont
     }
 }
 
