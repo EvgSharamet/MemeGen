@@ -41,7 +41,7 @@ class ImageFullScreenView: UIView {
         fullImageView.translatesAutoresizingMaskIntoConstraints = false
         fullImageView.stretchSafe()
         fullImageView.contentMode = .scaleAspectFit
-        fullImageView.backgroundColor = .systemGroupedBackground
+        fullImageView.backgroundColor = .systemGray6
         fullImageView.image = UIImage(named: "meme")
     }
     
@@ -89,7 +89,6 @@ class ImageFullScreenView: UIView {
         topLabel.textAlignment = .natural
         topLabel.font = UIConst.fullScreenTopBottomLabelFont
         topLabel.backgroundColor = .clear
-        topLabel.textColor = .black
         
         let topTextField = UITextField()
         topTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +103,6 @@ class ImageFullScreenView: UIView {
         stack.addArrangedSubview(bottomLabel)
         bottomLabel.text = "Bottom text"
         bottomLabel.font = UIConst.fullScreenTopBottomLabelFont
-        bottomLabel.textColor = .black
         bottomLabel.backgroundColor = .clear
         
         let bottomTextField = UITextField()

@@ -27,7 +27,7 @@ class SharingView: UIView {
     //MARK: - private functions
     
     private func prepare() {
-        self.backgroundColor = .systemGroupedBackground
+        self.backgroundColor = .systemGray6
         setupLabel()
         setupImageView()
         setupButtonsStack()
