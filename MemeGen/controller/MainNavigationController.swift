@@ -16,10 +16,10 @@ class MainNavigationController: UINavigationController {
         let collectionWindow = ImageCatalogController()
         pushViewController(collectionWindow, animated: true)
         
-        let imageFullWindow = ImageFullScreenController()
-        pushViewController(imageFullWindow, animated: true)
+      //  let imageFullWindow = ImageFullScreenController()
+      //  pushViewController(imageFullWindow, animated: true)
         
-        let sharingWindow = SharingViewController()
-        pushViewController(sharingWindow, animated: true)
+     //   let sharingWindow = SharingViewController()
+     //   pushViewController(sharingWindow, animated: true)
     }
 }
