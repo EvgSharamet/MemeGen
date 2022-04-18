@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 
 class ImageFullScreenView: UIView {
-    let fullImageView = UIImageView()
-    let blurView = UIView()
+    //MARK: - data
+    
     let generateButton = UIButton()
+    let fullImageView = UIImageView()
+    private let blurView = UIView()
+
+    //MARK: - public functions
     
     init() {
         super.init(frame: .zero)
@@ -22,16 +26,17 @@ class ImageFullScreenView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func prepare() {
+    //MARK: - private functions
+    
+    private func prepare() {
         self.backgroundColor = .systemGray6
         setupFullScreenView()
-        setupBlackoutScreen()
         setupCenterBlurView()
         setupCenterStackView()
         setupGenerateButton()
     }
     
-    func setupFullScreenView() {
+    private func setupFullScreenView() {
         self.addSubview(fullImageView)
         fullImageView.translatesAutoresizingMaskIntoConstraints = false
         fullImageView.stretchSafe()
@@ -40,7 +45,7 @@ class ImageFullScreenView: UIView {
         fullImageView.image = UIImage(named: "meme")
     }
     
-    func setupBlackoutScreen() {
+    private func setupBlackoutScreen() {
         let blackoutView = UIView()
         self.addSubview(blackoutView)
         blackoutView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +53,7 @@ class ImageFullScreenView: UIView {
         blackoutView.backgroundColor = .black.withAlphaComponent(0.6)
     }
     
-    func setupCenterBlurView() {
+    private func setupCenterBlurView() {
         self.addSubview(blurView)
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -66,7 +71,7 @@ class ImageFullScreenView: UIView {
         blurView.layer.cornerRadius = 30
     }
     
-    func setupCenterStackView() {
+    private func setupCenterStackView() {
         let stack = UIStackView()
         blurView.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -80,11 +85,11 @@ class ImageFullScreenView: UIView {
         let topLabel = UILabel()
         topLabel.translatesAutoresizingMaskIntoConstraints = false
         stack.addArrangedSubview(topLabel)
-        topLabel.text = "TOP TEXT"
+        topLabel.text = "Top text"
         topLabel.textAlignment = .natural
         topLabel.font = UIConst.fullScreenTopBottomLabelFont
         topLabel.backgroundColor = .clear
-        topLabel.textColor = .white
+        topLabel.textColor = .black
         
         let topTextField = UITextField()
         topTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -92,14 +97,14 @@ class ImageFullScreenView: UIView {
         topTextField.placeholder = "top_text"
         topTextField.setLeftPaddingPoints(10)
         topTextField.layer.cornerRadius = 10
-        topTextField.backgroundColor = .white
+        topTextField.backgroundColor = .systemGray6
         
         let bottomLabel = UILabel()
         bottomLabel.translatesAutoresizingMaskIntoConstraints = false
         stack.addArrangedSubview(bottomLabel)
-        bottomLabel.text = "BOTTOM TEXT"
+        bottomLabel.text = "Bottom text"
         bottomLabel.font = UIConst.fullScreenTopBottomLabelFont
-        bottomLabel.textColor = .white
+        bottomLabel.textColor = .black
         bottomLabel.backgroundColor = .clear
         
         let bottomTextField = UITextField()
@@ -108,15 +113,15 @@ class ImageFullScreenView: UIView {
         bottomTextField.placeholder = "bottom_text"
         bottomTextField.setLeftPaddingPoints(10)
         bottomTextField.layer.cornerRadius = 10
-        bottomTextField.backgroundColor = .white
+        bottomTextField.backgroundColor = .systemGray6
     }
     
-    func setupGenerateButton() {
+    private func setupGenerateButton() {
         self.addSubview(generateButton)
         generateButton.translatesAutoresizingMaskIntoConstraints = false
         generateButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
         generateButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        generateButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        generateButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         generateButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         generateButton.layer.masksToBounds = true
         generateButton.layer.cornerRadius = 15
@@ -125,7 +130,7 @@ class ImageFullScreenView: UIView {
             green: 36 / 255,
             blue: 27 / 255,
             alpha: 1)
-        generateButton.setTitle("GENERATE", for: .normal)
+        generateButton.setTitle("Generate!", for: .normal)
         generateButton.titleLabel?.font = UIConst.fullScreenTopBottomLabelFont
     }
 }

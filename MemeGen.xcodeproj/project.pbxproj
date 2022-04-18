@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8508B4E12809B72100D5D6F7 /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8508B4E02809B72100D5D6F7 /* SharingViewController.swift */; };
+		8508B4E32809B83200D5D6F7 /* SharingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8508B4E22809B83200D5D6F7 /* SharingView.swift */; };
 		859CAAE42808816A00CB232D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE32808816A00CB232D /* ViewExtensions.swift */; };
 		859CAAE62808869800CB232D /* FontsReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE52808869800CB232D /* FontsReference.swift */; };
 		859CAAE82808885200CB232D /* ImageCatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAE72808885200CB232D /* ImageCatalogCell.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8508B4E02809B72100D5D6F7 /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
+		8508B4E22809B83200D5D6F7 /* SharingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingView.swift; sourceTree = "<group>"; };
 		859CAAE32808816A00CB232D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		859CAAE52808869800CB232D /* FontsReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsReference.swift; sourceTree = "<group>"; };
 		859CAAE72808885200CB232D /* ImageCatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCatalogCell.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 				85E8B4EA2808687E00C0D468 /* MainNavigationController.swift */,
 				85E8B4ED2808694200C0D468 /* ImageCatalogController.swift */,
 				859CAAEB280988F800CB232D /* ImageFullScreenController.swift */,
+				8508B4E02809B72100D5D6F7 /* SharingViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -115,6 +120,7 @@
 				859CAAE52808869800CB232D /* FontsReference.swift */,
 				859CAAE72808885200CB232D /* ImageCatalogCell.swift */,
 				859CAAED2809895B00CB232D /* ImageFullScreenView.swift */,
+				8508B4E22809B83200D5D6F7 /* SharingView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -197,7 +203,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				859CAAE62808869800CB232D /* FontsReference.swift in Sources */,
+				8508B4E12809B72100D5D6F7 /* SharingViewController.swift in Sources */,
 				859CAAEA28088F4400CB232D /* ColorExtensions.swift in Sources */,
+				8508B4E32809B83200D5D6F7 /* SharingView.swift in Sources */,
 				85E8B4EB2808687E00C0D468 /* MainNavigationController.swift in Sources */,
 				859CAAE42808816A00CB232D /* ViewExtensions.swift in Sources */,
 				85E8B4D42808679100C0D468 /* AppDelegate.swift in Sources */,
