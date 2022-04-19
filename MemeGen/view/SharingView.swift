@@ -56,7 +56,7 @@ class SharingView: UIView {
         imageView.layer.cornerRadius = 40
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.image = ImageCreationService.shared.getMemeWithText(memeName: "Alien-Meeting-Suggestion", topText: "top", bottomText: "bottom")
+        imageView.image = ImageCreationService.shared.getMemeWithText(memeName: "Alien-Meeting-Suggestion", topText: "", bottomText: "")
     }
     
     private func setupButtonsStack() {

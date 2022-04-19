@@ -37,37 +37,7 @@ class ImageCatalogController: UIViewController {
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        urlSe()
-    }
-
-    func urlSe() {
-        let url = URL(string: "https://apimeme.com")!
-        let task = URLSession.shared.downloadTask(with: url) { localURL, urlResponse, error in
-            if let localURL = localURL {
-                if let string = try? String(contentsOf: localURL) {
-                    let string2 = self.matches(for: "\"(.+)\"", in: string)
-                    for i in string2 {
-                        print(i)
-                    }
-                }
-            }
-        }
-        task.resume()
-    }
-
-    func matches(for regex: String, in text: String) -> [String] {
-
-        do {
-            let regex = try NSRegularExpression(pattern: regex)
-            let results = regex.matches(in: text,
-                                        range: NSRange(text.startIndex..., in: text))
-            return results.map {
-                String(text[Range($0.range, in: text)!])
-            }
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
-            return []
-        }
+        MemeCollectionService.shared.createSeccion()
     }
 }
 
