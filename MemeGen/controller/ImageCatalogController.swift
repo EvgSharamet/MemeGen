@@ -37,7 +37,10 @@ class ImageCatalogController: UIViewController {
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        MemeCollectionService.shared.createSeccion()
+        MemeCollectionService.shared.createURLSeccion()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10), execute: {
+            self.imageCollection?.reloadData()
+        })
     }
 }
 
@@ -45,13 +48,15 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 40
+        return MemeCollectionRepoService.shared.collection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCatalogController.identifier, for: indexPath) as? ImageCatalogCell else {
             return UICollectionViewCell()
         }
+        cell.configure(data: ImageCatalogCell.CellData(name: MemeCollectionRepoService.shared.collection[indexPath.row].name,
+                                                       image: MemeCollectionRepoService.shared.collection[indexPath.row].image))
         return cell
     }
     
@@ -70,7 +75,7 @@ extension ImageCatalogController: UICollectionViewDelegateFlowLayout {
     }
     
     func itemWidth(for width: CGFloat, spacing: CGFloat) -> CGFloat {
-        let itemsInRow: CGFloat = 2
+        let itemsInRow: CGFloat = 4
 
         let totalSpacing: CGFloat = 2 * spacing + (itemsInRow - 1) * spacing
         let finalWidth = (width - totalSpacing) / itemsInRow

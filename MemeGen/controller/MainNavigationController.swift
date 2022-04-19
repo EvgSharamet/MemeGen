@@ -19,7 +19,7 @@ class MainNavigationController: UINavigationController {
       //  let imageFullWindow = ImageFullScreenController()
       //  pushViewController(imageFullWindow, animated: true)
         
-        let sharingWindow = SharingViewController()
-        pushViewController(sharingWindow, animated: true)
+     //   let sharingWindow = SharingViewController()
+       // pushViewController(sharingWindow, animated: true)
     }
 }

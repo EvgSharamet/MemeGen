@@ -10,6 +10,9 @@ import UIKit
 
 class MemeCollectionService {
     static let shared = MemeCollectionService()
+    private let queue = DispatchQueue(label: "ImageLoaderService.queue",
+                                      qos: .background,
+                                      attributes: .concurrent)
     
     func parseMemes(src: String) -> [String] {
         let regex = "<option value=\"(.+)\">[^<]+<\\/option>"
@@ -32,14 +35,12 @@ class MemeCollectionService {
             
             let str = String(decoding: data, as: UTF8.self)
             let memeList = self.parseMemes(src: str)
-            print("memeList = \(memeList)")
+            for meme in memeList {
+                let index = MemeCollectionRepoService.shared.addItem(MemeItem(name: meme, image: nil))
+                ImageCreationService.shared.asyncLoadingImage(memeName: meme) {
+                    MemeCollectionRepoService.shared.setImageForItem(image: $0, index: index)
+                }
+            }
         }.resume()
     }
-    
-    func downloadMemesCollection() -> [UIImage?] {
-        return [nil]
-    }
-    
-    
-    
 }
