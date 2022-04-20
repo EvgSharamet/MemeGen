@@ -19,6 +19,7 @@
 		859CAAF02809A70D00CB232D /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CAAEF2809A70D00CB232D /* UITextFieldExtensions.swift */; };
 		85AB8D18280D91C500B14A5C /* ImageCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB8D17280D91C500B14A5C /* ImageCreationService.swift */; };
 		85B4C29F280F0B5E0043FC1A /* MemeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B4C29E280F0B5E0043FC1A /* MemeCollection.swift */; };
+		85B4C2A1281022A60043FC1A /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B4C2A0281022A60043FC1A /* ViewControllerExtension.swift */; };
 		85E8B4D42808679100C0D468 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4D32808679100C0D468 /* AppDelegate.swift */; };
 		85E8B4D62808679100C0D468 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4D52808679100C0D468 /* SceneDelegate.swift */; };
 		85E8B4DE2808679100C0D468 /* MemeGen.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85E8B4DC2808679100C0D468 /* MemeGen.xcdatamodeld */; };
@@ -42,6 +43,7 @@
 		859CAAEF2809A70D00CB232D /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		85AB8D17280D91C500B14A5C /* ImageCreationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCreationService.swift; sourceTree = "<group>"; };
 		85B4C29E280F0B5E0043FC1A /* MemeCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeCollection.swift; sourceTree = "<group>"; };
+		85B4C2A0281022A60043FC1A /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		85E8B4D02808679100C0D468 /* MemeGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85E8B4D32808679100C0D468 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85E8B4D52808679100C0D468 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				859CAAE32808816A00CB232D /* ViewExtensions.swift */,
 				859CAAE928088F4400CB232D /* ColorExtensions.swift */,
 				859CAAEF2809A70D00CB232D /* UITextFieldExtensions.swift */,
+				85B4C2A0281022A60043FC1A /* ViewControllerExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				85E8B4DE2808679100C0D468 /* MemeGen.xcdatamodeld in Sources */,
 				85E8B4D62808679100C0D468 /* SceneDelegate.swift in Sources */,
 				857ACDA9280DD1EA004A2D3A /* MemeCollectionService.swift in Sources */,
+				85B4C2A1281022A60043FC1A /* ViewControllerExtension.swift in Sources */,
 				85E8B4F428086D8400C0D468 /* ImageCatalogView.swift in Sources */,
 				859CAAEC280988F800CB232D /* ImageFullScreenController.swift in Sources */,
 				859CAAF02809A70D00CB232D /* UITextFieldExtensions.swift in Sources */,

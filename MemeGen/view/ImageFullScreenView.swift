@@ -58,17 +58,17 @@ class ImageFullScreenView: UIView {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         blurView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        blurView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        blurView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         blurView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 40).isActive = true
         blurView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40).isActive = true
         blurView.backgroundColor = .clear
         blurView.layer.masksToBounds = true
+        blurView.layer.cornerRadius = 30
         
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurView.addSubview(blurEffectView)
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.stretch()
-        blurView.layer.cornerRadius = 30
     }
     
     private func setupCenterStackView() {
@@ -132,5 +132,3 @@ class ImageFullScreenView: UIView {
         generateButton.titleLabel?.font = UIConst.fullScreenTopBottomLabelFont
     }
 }
-
-

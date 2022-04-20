@@ -20,6 +20,7 @@ class ImageCatalogController: UIViewController {
     
     private var imageCollection: UICollectionView?
     private static let identifier = "CollectionViewCell"
+    var cellTapListener: ((_ index: Int) -> Void)?
     
     //MARK: - internal functions 
     
@@ -32,7 +33,8 @@ class ImageCatalogController: UIViewController {
         view.stretch()
         
         self.imageCollection = view.imageCollection
-
+        self.imageCollection?.isUserInteractionEnabled = true
+        
         imageCollection?.dataSource = self
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
@@ -44,7 +46,7 @@ class ImageCatalogController: UIViewController {
     }
 }
 
-extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDelegate  {
+extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDelegate {
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -81,5 +83,9 @@ extension ImageCatalogController: UICollectionViewDelegateFlowLayout {
         let finalWidth = (width - totalSpacing) / itemsInRow
 
         return floor(finalWidth)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        cellTapListener?(indexPath.row)
     }
 }

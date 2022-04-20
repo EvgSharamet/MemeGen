@@ -14,6 +14,7 @@ class MainNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let collectionWindow = ImageCatalogController()
+        collectionWindow.cellTapListener = openFullScreen
         pushViewController(collectionWindow, animated: true)
         
       //  let imageFullWindow = ImageFullScreenController()
@@ -21,5 +22,11 @@ class MainNavigationController: UINavigationController {
         
      //   let sharingWindow = SharingViewController()
        // pushViewController(sharingWindow, animated: true)
+    }
+    
+    func openFullScreen(_ index: Int) {
+        let imageFullWindow = ImageFullScreenController()
+        imageFullWindow.imageIndex = index
+        pushViewController(imageFullWindow, animated: true)
     }
 }
