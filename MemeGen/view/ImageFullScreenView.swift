@@ -13,6 +13,9 @@ class ImageFullScreenView: UIView {
     
     let generateButton = UIButton()
     let fullImageView = UIImageView()
+    let topTextField = UITextField()
+    let bottomTextField = UITextField()
+    
     private let blurView = UIView()
 
     //MARK: - public functions
@@ -90,7 +93,6 @@ class ImageFullScreenView: UIView {
         topLabel.font = UIConst.fullScreenTopBottomLabelFont
         topLabel.backgroundColor = .clear
         
-        let topTextField = UITextField()
         topTextField.translatesAutoresizingMaskIntoConstraints = false
         stack.addArrangedSubview(topTextField)
         topTextField.placeholder = "top_text"
@@ -105,7 +107,6 @@ class ImageFullScreenView: UIView {
         bottomLabel.font = UIConst.fullScreenTopBottomLabelFont
         bottomLabel.backgroundColor = .clear
         
-        let bottomTextField = UITextField()
         bottomTextField.translatesAutoresizingMaskIntoConstraints = false
         stack.addArrangedSubview(bottomTextField)
         bottomTextField.placeholder = "bottom_text"

@@ -10,6 +10,7 @@ import UIKit
 
 class SharingViewController: UIViewController {
     //MARK: - internal functions
+    var image: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,5 +18,9 @@ class SharingViewController: UIViewController {
         self.view.addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.stretch()
+        guard let image = self.image else {
+             return 
+        }
+        view.imageView.image = image
     }
 }

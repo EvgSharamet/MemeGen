@@ -17,6 +17,9 @@ class ImageCreationService {
     static let shared = ImageCreationService()
     
     func getMemeWithText(memeName: String, topText: String, bottomText: String) -> UIImage? {
+        print(memeName)
+        print(topText)
+        print(bottomText)
         guard let url = URL(string: (ImageCreationService.urlForFullScreen.replacingOccurrences(of: "${memeName}", with: memeName)).replacingOccurrences(of: "${top}", with: topText).replacingOccurrences(of: "${bottom}", with: bottomText)),
               let data = try? Data(contentsOf: url),
               let img = UIImage(data: data)
@@ -25,22 +28,7 @@ class ImageCreationService {
         }
         return img
     }
-    
-/*
-    func getMemeForCollection(memeName: String) -> UIImage? {
-        queue.async {
-        print(ImageCreationService.urlForCollectionImage.replacingOccurrences(of: "${memeName}", with: memeName))
-        guard let url = URL(string: ImageCreationService.urlForCollectionImage.replacingOccurrences(of: "${memeName}", with: memeName)),
-              let data = try? Data(contentsOf: url),
-              let img = UIImage(data: data)
-        else {
-            print("NO")
-            return nil
-        }
-        print("YES")
-        return img
-    }
-    */
+
     func asyncLoadingImage(memeName: String, completion: @escaping (UIImage?) -> Void) {
         queue.async {
             guard let url = URL(string: ImageCreationService.urlForCollectionImage.replacingOccurrences(of: "${memeName}", with: memeName)),

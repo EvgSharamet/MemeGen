@@ -16,17 +16,18 @@ class MainNavigationController: UINavigationController {
         let collectionWindow = ImageCatalogController()
         collectionWindow.cellTapListener = openFullScreen
         pushViewController(collectionWindow, animated: true)
-        
-      //  let imageFullWindow = ImageFullScreenController()
-      //  pushViewController(imageFullWindow, animated: true)
-        
-     //   let sharingWindow = SharingViewController()
-       // pushViewController(sharingWindow, animated: true)
     }
     
     func openFullScreen(_ index: Int) {
         let imageFullWindow = ImageFullScreenController()
-        imageFullWindow.imageIndex = index
+        imageFullWindow.memeIndex = index
+        imageFullWindow.generatBattonTapListener = openSharingScreen
         pushViewController(imageFullWindow, animated: true)
+    }
+    
+    func openSharingScreen(_ image: UIImage?) {
+        let sharingWindow = SharingViewController()
+        sharingWindow.image = image
+        pushViewController(sharingWindow, animated: true)
     }
 }
