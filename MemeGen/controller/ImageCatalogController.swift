@@ -38,7 +38,7 @@ class ImageCatalogController: UIViewController {
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
         MemeCollectionService.shared.createURLSeccion()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
             self.imageCollection?.reloadData()
         })
     }
