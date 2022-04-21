@@ -18,15 +18,17 @@ class ImageCatalogController: UIViewController {
     
     //MARK: - data
     
-    private var imageCollection: UICollectionView?
-    private static let identifier = "CollectionViewCell"
+    var memeService: IMemeService?
     var cellTapListener: ((_ index: Int) -> Void)?
     
-    //MARK: - internal functions 
+    private var imageCollection: UICollectionView?
+    private static let identifier = "CollectionViewCell"
+    
+    //MARK: - internal functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemGray5.withAlphaComponent(0.5)
+        self.view.backgroundColor = .systemGray6
         let view = ImageCatalogView()
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
@@ -39,10 +41,21 @@ class ImageCatalogController: UIViewController {
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        MemeCollectionService.shared.createURLSeccion()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
-            self.imageCollection?.reloadData()
+        MemeService.shared.getMemeList(completion: { result in
+            DispatchQueue.main.async { self.imageCollection?.reloadData()}
         })
+    }
+    
+    func updateMemeList() {
+        //  showSpinner()
+        memeService?.getMemeList { result in
+            switch result {
+            case .success(_):
+                self.imageCollection?.reloadData()
+            case .failure(let error): break
+                // showError
+            }
+        }
     }
 }
 
@@ -50,18 +63,38 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MemeCollectionRepoService.shared.collection.count
+        return MemeService.shared.memeList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCatalogController.identifier, for: indexPath) as? ImageCatalogCell else {
+        guard let memeList = memeService?.memeList,
+              memeList.indices.contains(indexPath.row),
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCatalogController.identifier, for: indexPath) as? ImageCatalogCell
+        else {
             return UICollectionViewCell()
         }
-        cell.configure(data: ImageCatalogCell.CellData(name: MemeCollectionRepoService.shared.collection[indexPath.row].name,
-                                                       image: MemeCollectionRepoService.shared.collection[indexPath.row].image))
+    
+        let memeName = memeList[indexPath.row]
+        
+        let placeholderData = ImageCatalogCell.CellData(
+            name: memeName,
+            image: UIImage(named: "placeholder")
+        )
+        
+        cell.configure(data: placeholderData)
+        
+        memeService?.getThumbnail(forMeme: memeName) { image  in
+            switch image {
+            case .success(let image):
+                cell.configure(data: ImageCatalogCell.CellData(name: memeName, image: image) )
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
         return cell
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         10
     }
@@ -78,10 +111,10 @@ extension ImageCatalogController: UICollectionViewDelegateFlowLayout {
     
     func itemWidth(for width: CGFloat, spacing: CGFloat) -> CGFloat {
         let itemsInRow: CGFloat = 4
-
+        
         let totalSpacing: CGFloat = 2 * spacing + (itemsInRow - 1) * spacing
         let finalWidth = (width - totalSpacing) / itemsInRow
-
+        
         return floor(finalWidth)
     }
     

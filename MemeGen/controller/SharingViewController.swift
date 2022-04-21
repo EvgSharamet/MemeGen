@@ -10,6 +10,7 @@ import UIKit
 
 class SharingViewController: UIViewController {
     //MARK: - internal functions
+    
     var image: UIImage?
     
     override func viewDidLoad() {

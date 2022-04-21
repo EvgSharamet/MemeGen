@@ -48,7 +48,6 @@ class ImageCatalogCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = .random
-        imageView.image = UIImage(named: "placeholder")
         
         self.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +55,6 @@ class ImageCatalogCell: UICollectionViewCell {
         nameLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
         nameLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor).isActive = true
         nameLabel.textAlignment = .center
-        nameLabel.text = "Image Name"
         nameLabel.font = UIConst.imageNameFont
     }
 }

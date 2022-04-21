@@ -34,18 +34,18 @@ class ImageFullScreenController: UIViewController {
         guard let memeIndex = memeIndex else {
             return
         }
-        self.imageView?.image = MemeCollectionRepoService.shared.collection[memeIndex].image
+  //      self.imageView?.image = MemeCollectionRepoService.shared.collection[memeIndex].image
         view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
     }
     
     @objc private func generateButtonDidTap() {
         guard let index = memeIndex else { return }
         if let top = topTextField?.text, let bottom = bottomTextField?.text {
-            let image = ImageCreationService.shared.getMemeWithText(memeName: MemeCollectionRepoService.shared.collection[index].name,
-                                                                    topText: top,
-                                                                    bottomText: bottom)
+   //         let image = ImageCreationService.shared.getMemeWithText(memeName: MemeCollectionRepoService.shared.collection[index].name,
+          //                                                          topText: top,
+          //                                                          bottomText: bottom)
             
-            generatBattonTapListener?(image)
+     //       generatBattonTapListener?(image)
         }
         
     }

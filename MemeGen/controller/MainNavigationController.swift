@@ -9,6 +9,19 @@ import Foundation
 import UIKit
 
 class MainNavigationController: UINavigationController {
+    private let memeService: IMemeService
+    
+    //MARK: - public functions
+    
+    init(memeService: IMemeService) {
+        self.memeService = memeService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - internal functions
     
     override func viewDidLoad() {
