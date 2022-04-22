@@ -86,11 +86,13 @@ class MemeService: IMemeService {
         URLSession.shared.dataTask(with: URL(string: "https://apimeme.com")!) { data, response, error in
             if let error = error {
                 print("ERROR: \(error), ")
+                completion(.failure((NSError(domain: "MemeService", code: 010))))
                 return
             }
             
             guard let data = data else {
                 print("no data")
+                completion(.failure((NSError(domain: "MemeService", code: 011))))
                 return
             }
             let str = String(decoding: data, as: UTF8.self)

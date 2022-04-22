@@ -26,6 +26,15 @@ class ImageCatalogController: UIViewController {
     
     //MARK: - internal functions
     
+    init(memeService: IMemeService) {
+        self.memeService = memeService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemGray6
@@ -52,7 +61,7 @@ class ImageCatalogController: UIViewController {
             switch result {
             case .success(_):
                 self.imageCollection?.reloadData()
-            case .failure(let error): break
+            case .failure(_): break
                 // showError
             }
         }
@@ -67,11 +76,16 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let memeList = memeService?.memeList,
-              memeList.indices.contains(indexPath.row),
-              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCatalogController.identifier, for: indexPath) as? ImageCatalogCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCatalogController.identifier, for: indexPath) as? ImageCatalogCell
         else {
             return UICollectionViewCell()
+        }
+        
+        guard let memeList = memeService?.memeList, memeList.indices.contains(indexPath.row)
+        else {
+            print(memeService)
+            print(memeService?.memeList)
+            return cell
         }
     
         let memeName = memeList[indexPath.row]
