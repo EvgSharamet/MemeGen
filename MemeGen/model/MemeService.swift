@@ -14,7 +14,6 @@ class MemeService: IMemeService {
     var memeList: [String]?
     var images: [UIImage]?
     
-    static let shared = MemeService()
     static let urlForFullScreen = "https://apimeme.com/meme?meme=${memeName}&top=${top}&bottom=${bottom}"
     static let urlForCollectionImage = "https://apimeme.com/thumbnail?name=${memeName}"
     private let queue = DispatchQueue(label: "ImageLoaderService.queue",

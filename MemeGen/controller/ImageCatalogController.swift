@@ -18,7 +18,7 @@ class ImageCatalogController: UIViewController {
     
     //MARK: - data
     
-    var memeService: IMemeService?
+    private let memeService: IMemeService
     var cellTapListener: ((_ index: Int) -> Void)?
     
     private var imageCollection: UICollectionView?
@@ -50,14 +50,14 @@ class ImageCatalogController: UIViewController {
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        MemeService.shared.getMemeList(completion: { result in
+        memeService.getMemeList(completion: { result in
             DispatchQueue.main.async { self.imageCollection?.reloadData()}
         })
     }
     
     func updateMemeList() {
         //  showSpinner()
-        memeService?.getMemeList { result in
+        memeService.getMemeList { result in
             switch result {
             case .success(_):
                 self.imageCollection?.reloadData()
@@ -72,7 +72,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MemeService.shared.memeList?.count ?? 0
+        return memeService.memeList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,13 +81,13 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
             return UICollectionViewCell()
         }
         
-        guard let memeList = memeService?.memeList, memeList.indices.contains(indexPath.row)
+        guard let memeList = memeService.memeList, memeList.indices.contains(indexPath.row)
         else {
             print(memeService)
-            print(memeService?.memeList)
+            print(memeService.memeList)
             return cell
         }
-    
+        
         let memeName = memeList[indexPath.row]
         
         let placeholderData = ImageCatalogCell.CellData(
@@ -97,10 +97,12 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
         
         cell.configure(data: placeholderData)
         
-        memeService?.getThumbnail(forMeme: memeName) { image  in
+        memeService.getThumbnail(forMeme: memeName) { image  in
             switch image {
             case .success(let image):
-                cell.configure(data: ImageCatalogCell.CellData(name: memeName, image: image) )
+                DispatchQueue.main.async {
+                    cell.configure(data: ImageCatalogCell.CellData(name: memeName, image: image))
+                }
                 
             case .failure(let error):
                 print(error)
@@ -108,7 +110,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
         }
         return cell
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         10
     }
