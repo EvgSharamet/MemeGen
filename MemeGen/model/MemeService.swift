@@ -12,7 +12,7 @@ class MemeService: IMemeService {
     //MARK: - data
     
     var memeList: [String]?
-    var images: [UIImage]?
+    var images: [String: UIImage] = [:]
     
     static let urlForFullScreen = "https://apimeme.com/meme?meme=${memeName}&top=${top}&bottom=${bottom}"
     static let urlForCollectionImage = "https://apimeme.com/thumbnail?name=${memeName}"
@@ -43,6 +43,7 @@ class MemeService: IMemeService {
                     completion(.failure(NSError(domain: "MemeService", code: 000)))
                     return
                 }
+                self.images[memeName] = img
                 completion(.success(img))
                 break
             case .failure(let error):
@@ -52,9 +53,25 @@ class MemeService: IMemeService {
     }
     
     func getFullImage(forMeme memeName: String, topText: String, bottomText: String, completion: @escaping ImageResponseHandler) {
-        
+        guard let generatedURL = URL(string: MemeService.urlForFullScreen.replacingOccurrences(of: "${memeName}", with: memeName)) else {
+            return
+        } // добавь про top и bottom
+
+        downloadData(url: generatedURL) { result in
+            switch result {
+            case .success(let imgData):
+                guard let img = UIImage(data: imgData) else {
+                    completion(.failure(NSError(domain: "MemeService", code: 000)))
+                    return
+                }
+                self.images.updateValue(img, forKey:memeName)
+                completion(.success(img))
+                break
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
-    
     
     //MARK: - private functions
     

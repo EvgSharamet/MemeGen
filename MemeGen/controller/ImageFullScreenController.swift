@@ -49,18 +49,17 @@ class ImageFullScreenController: UIViewController {
         guard let memeIndex = memeIndex else {
             return
         }
-   //     self.imageView?.image = memeService.memeList?[memeIndex]
+
+        guard let memeName = self.memeService.memeList?[memeIndex] else {
+            return
+        }
+        
+        self.imageView?.image = memeService.images[memeName]
     }
     
     @objc private func generateButtonDidTap() {
-        guard let index = memeIndex else { return }
         if let top = topTextField?.text, let bottom = bottomTextField?.text {
-   //         let image = ImageCreationService.shared.getMemeWithText(memeName: MemeCollectionRepoService.shared.collection[index].name,
-          //                                                          topText: top,
-          //                                                          bottomText: bottom)
-            
-     //       generatBattonTapListener?(image)
+            print("I'm here")
         }
-        
     }
 }

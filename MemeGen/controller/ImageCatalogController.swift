@@ -18,9 +18,9 @@ class ImageCatalogController: UIViewController {
     
     //MARK: - data
     
-    private let memeService: IMemeService
     var cellTapListener: ((_ index: Int) -> Void)?
     
+    private let memeService: IMemeService
     private var imageCollection: UICollectionView?
     private static let identifier = "CollectionViewCell"
     
