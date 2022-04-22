@@ -32,7 +32,7 @@ class MainNavigationController: UINavigationController {
     }
     
     func openFullScreen(_ index: Int) {
-        let imageFullWindow = ImageFullScreenController()
+        let imageFullWindow = ImageFullScreenController(memeService: memeService)
         imageFullWindow.memeIndex = index
         imageFullWindow.generatBattonTapListener = openSharingScreen
         pushViewController(imageFullWindow, animated: true)

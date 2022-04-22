@@ -17,8 +17,21 @@ class ImageFullScreenController: UIViewController {
     var bottomTextField: UITextField?
     var generatBattonTapListener: ((UIImage?) -> Void)?
     
-    //MARK: - internal functions
+    private let memeService: IMemeService
     
+    //MARK: - public functions
+    
+    init(memeService: IMemeService) {
+        self.memeService = memeService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - internal functions
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let view = ImageFullScreenView()
@@ -31,11 +44,12 @@ class ImageFullScreenController: UIViewController {
         self.topTextField = view.topTextField
         self.bottomTextField = view.bottomTextField
         
+        view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
+        
         guard let memeIndex = memeIndex else {
             return
         }
-  //      self.imageView?.image = MemeCollectionRepoService.shared.collection[memeIndex].image
-        view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
+   //     self.imageView?.image = memeService.memeList?[memeIndex]
     }
     
     @objc private func generateButtonDidTap() {

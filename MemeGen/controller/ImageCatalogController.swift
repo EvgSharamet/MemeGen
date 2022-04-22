@@ -83,8 +83,6 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
         
         guard let memeList = memeService.memeList, memeList.indices.contains(indexPath.row)
         else {
-            print(memeService)
-            print(memeService.memeList)
             return cell
         }
         
@@ -97,13 +95,15 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
         
         cell.configure(data: placeholderData)
         
-        memeService.getThumbnail(forMeme: memeName) { image  in
-            switch image {
+        memeService.getThumbnail(forMeme: memeName) {[weak self] result  in
+            switch result {
             case .success(let image):
+                let data = ImageCatalogCell.CellData(
+                    name: memeName,
+                    image: image)
                 DispatchQueue.main.async {
-                    cell.configure(data: ImageCatalogCell.CellData(name: memeName, image: image))
+                    self?.updateCell(at: indexPath, withData: data)
                 }
-                
             case .failure(let error):
                 print(error)
             }
@@ -113,6 +113,17 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         10
+    }
+    
+    //MARK: - private functions
+    
+    private func updateCell(at indexPath: IndexPath, withData data: ImageCatalogCell.CellData) {
+        guard let collectionView = imageCollection,
+              let cell = collectionView.cellForItem(at: indexPath) as? ImageCatalogCell
+        else {
+            return
+        }
+        cell.configure(data: data)
     }
 }
 
@@ -126,7 +137,7 @@ extension ImageCatalogController: UICollectionViewDelegateFlowLayout {
     }
     
     func itemWidth(for width: CGFloat, spacing: CGFloat) -> CGFloat {
-        let itemsInRow: CGFloat = 4
+        let itemsInRow: CGFloat = 3
         
         let totalSpacing: CGFloat = 2 * spacing + (itemsInRow - 1) * spacing
         let finalWidth = (width - totalSpacing) / itemsInRow
