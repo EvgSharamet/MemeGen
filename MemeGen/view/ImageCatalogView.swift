@@ -18,6 +18,7 @@ class ImageCatalogView: UIView {
         return collectionView
     }()
     let appNameLabel = UILabel()
+    let spinner = SpinnerView()
     
     //MARK: - public functions
     
@@ -36,6 +37,7 @@ class ImageCatalogView: UIView {
         self.backgroundColor = .systemGray6
         setupAppNameLabel()
         setupImageCollection()
+        setupSpinnerView()
     }
     
     private func setupAppNameLabel() {
@@ -57,5 +59,12 @@ class ImageCatalogView: UIView {
         imageCollection.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
         imageCollection.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         imageCollection.backgroundColor = .systemGray6
+    }
+    
+    private func setupSpinnerView() {
+        self.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.stretchSafe()
+        spinner.isHidden = true
     }
 }

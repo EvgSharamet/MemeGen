@@ -45,7 +45,6 @@ class ImageFullScreenView: UIView {
         fullImageView.stretchSafe()
         fullImageView.contentMode = .scaleAspectFit
         fullImageView.backgroundColor = .systemGray6
-        fullImageView.image = UIImage(named: "meme")
     }
     
     private func setupBlackoutScreen() {

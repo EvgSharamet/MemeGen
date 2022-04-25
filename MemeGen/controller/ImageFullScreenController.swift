@@ -61,14 +61,32 @@ class ImageFullScreenController: UIViewController {
                     self.imageView?.image = img
                 }
             case .failure(let error):
-                print("ERROR")
+                print(error)
             }
         }
     }
     
     @objc private func generateButtonDidTap() {
+        guard let memeIndex = memeIndex else {
+            return
+        }
+        
+        guard let memeName = memeService.memeList?[memeIndex] else {
+            return
+        }
+        
         if let top = topTextField?.text, let bottom = bottomTextField?.text {
-            print("I'm here")
+            memeService.getFullImage(forMeme: memeName, topText: top, bottomText: bottom) { data in
+                switch data {
+                case .success(let img):
+                    DispatchQueue.main.async {
+                        self.imageView?.image = img
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
     }
 }

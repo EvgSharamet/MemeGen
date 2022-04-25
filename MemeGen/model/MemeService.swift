@@ -17,8 +17,7 @@ class MemeService: IMemeService {
     static let urlForFullScreen = "https://apimeme.com/meme?meme=${memeName}&top=${top}&bottom=${bottom}"
     static let urlForCollectionImage = "https://apimeme.com/thumbnail?name=${memeName}"
     private let queue = DispatchQueue(label: "ImageLoaderService.queue",
-                                      qos: .background,
-                                      attributes: .concurrent)
+                                      qos: .background)
     
     //MARK: - internal functions
     
@@ -47,10 +46,13 @@ class MemeService: IMemeService {
             switch result {
             case .success(let imgData):
                 guard let img = UIImage(data: imgData) else {
-                    completion(.failure(NSError(domain: "MemeService", code: 000)))
+                    completion(.failure(NSError(domain: "MemeService6", code: 000)))
                     return
                 }
-                self.images[memeName] = img
+                
+                self.queue.async {
+                    self.images[memeName] = img
+                }
                 completion(.success(img))
                 break
             case .failure(let error):
@@ -60,15 +62,16 @@ class MemeService: IMemeService {
     }
     
     func getFullImage(forMeme memeName: String, topText: String, bottomText: String, completion: @escaping ImageResponseHandler) {
-        guard let generatedURL = URL(string: MemeService.urlForFullScreen.replacingOccurrences(of: "${memeName}", with: memeName)) else {
+        guard let generatedURL = URL(string: (MemeService.urlForFullScreen.replacingOccurrences(of: "${memeName}", with: memeName).replacingOccurrences(of: "${top}", with: topText).replacingOccurrences(of: "${bottom}", with: bottomText))) else {
             return
         } // добавь про top и bottom
-
+        print(generatedURL)
+        
         downloadData(url: generatedURL) { result in
             switch result {
             case .success(let imgData):
                 guard let img = UIImage(data: imgData) else {
-                    completion(.failure(NSError(domain: "MemeService", code: 000)))
+                    completion(.failure(NSError(domain: "MemeService7", code: 000)))
                     return
                 }
                 self.images.updateValue(img, forKey:memeName)
@@ -93,7 +96,7 @@ class MemeService: IMemeService {
                 completion(.success(data))
                 return
             }
-            completion(.failure(NSError(domain: "MemeService", code: 000)))
+            completion(.failure(NSError(domain: "MemeService3", code: 000)))
         }
         dataTask.resume()
     }
@@ -109,13 +112,13 @@ class MemeService: IMemeService {
         URLSession.shared.dataTask(with: URL(string: "https://apimeme.com")!) { data, response, error in
             if let error = error {
                 print("ERROR: \(error), ")
-                completion(.failure((NSError(domain: "MemeService", code: 010))))
+                completion(.failure((NSError(domain: "MemeService1", code: 010))))
                 return
             }
             
             guard let data = data else {
                 print("no data")
-                completion(.failure((NSError(domain: "MemeService", code: 011))))
+                completion(.failure((NSError(domain: "MemeService2", code: 011))))
                 return
             }
             let str = String(decoding: data, as: UTF8.self)

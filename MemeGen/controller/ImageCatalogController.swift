@@ -22,6 +22,7 @@ class ImageCatalogController: UIViewController {
     
     private let memeService: IMemeService
     private var imageCollection: UICollectionView?
+    private var spinner: UIView?
     private static let identifier = "CollectionViewCell"
     
     //MARK: - internal functions
@@ -45,6 +46,7 @@ class ImageCatalogController: UIViewController {
         
         self.imageCollection = view.imageCollection
         self.imageCollection?.isUserInteractionEnabled = true
+        self.spinner = view.spinner
         
         imageCollection?.dataSource = self
         imageCollection?.delegate = self
@@ -56,15 +58,26 @@ class ImageCatalogController: UIViewController {
     }
     
     func updateMemeList() {
-        //  showSpinner()
+        showSpinner()
+        print("qwerty")
         memeService.getMemeList { result in
             switch result {
             case .success(_):
+                print("HERE")
                 self.imageCollection?.reloadData()
+                self.hideSpinner()
             case .failure(_): break
                 // showError
             }
         }
+    }
+    
+    private func showSpinner() {
+        spinner?.isHidden = false
+    }
+    
+    private func hideSpinner() {
+        spinner?.isHidden = true
     }
 }
 
@@ -118,6 +131,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - private functions
     
     private func updateCell(at indexPath: IndexPath, withData data: ImageCatalogCell.CellData) {
+        
         guard let collectionView = imageCollection,
               let cell = collectionView.cellForItem(at: indexPath) as? ImageCatalogCell
         else {
