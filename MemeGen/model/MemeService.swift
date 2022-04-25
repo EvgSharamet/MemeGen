@@ -35,7 +35,14 @@ class MemeService: IMemeService {
         guard let generatedURL = URL(string: MemeService.urlForCollectionImage.replacingOccurrences(of: "${memeName}", with: memeName)) else {
             return
         }
-
+        
+        queue.async {
+            if let cached = self.images[memeName] {
+                completion(.success(cached))
+                return
+            }
+        }
+        
         downloadData(url: generatedURL) { result in
             switch result {
             case .success(let imgData):

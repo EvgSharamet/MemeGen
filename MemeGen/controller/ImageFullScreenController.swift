@@ -54,7 +54,16 @@ class ImageFullScreenController: UIViewController {
             return
         }
         
-        self.imageView?.image = memeService.images[memeName]
+        memeService.getThumbnail(forMeme: memeName) { data in
+            switch data {
+            case .success(let img):
+                DispatchQueue.main.async {
+                    self.imageView?.image = img
+                }
+            case .failure(let error):
+                print("ERROR")
+            }
+        }
     }
     
     @objc private func generateButtonDidTap() {
