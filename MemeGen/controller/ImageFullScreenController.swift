@@ -68,6 +68,8 @@ class ImageFullScreenController: UIViewController {
         }
     }
     
+    //MARK: - private functions
+    
     @objc private func generateButtonDidTap() {
         showSpinner()
         guard let memeIndex = memeIndex else {
@@ -78,7 +80,8 @@ class ImageFullScreenController: UIViewController {
             return
         }
         
-        if let top = topTextField?.text, let bottom = bottomTextField?.text {
+        if let top = topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+           let bottom = bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
             memeService.getFullImage(forMeme: memeName, topText: top, bottomText: bottom) { data in
                 switch data {
                 case .success(let img):

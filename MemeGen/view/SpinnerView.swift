@@ -9,7 +9,11 @@ import Foundation
 import UIKit
 
 class SpinnerView: UIView {
+    //MARK: - data
+    
     let spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+    
+    //MARK: - public functions
     
     init() {
         super.init(frame: .zero)
@@ -19,6 +23,8 @@ class SpinnerView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - private functions
     
     private func prepare() {
         self.backgroundColor = .darkGray.withAlphaComponent(0.7)

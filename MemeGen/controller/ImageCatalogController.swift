@@ -73,6 +73,8 @@ class ImageCatalogController: UIViewController {
         }
     }
     
+    //MARK: - private functions
+    
     private func showSpinner() {
         spinner?.isHidden = false
     }

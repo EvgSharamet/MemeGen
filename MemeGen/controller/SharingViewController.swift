@@ -9,9 +9,11 @@ import Foundation
 import UIKit
 
 class SharingViewController: UIViewController {
-    //MARK: - internal functions
+    //MARK: - data
     
     var image: UIImage?
+    
+    //MARK: - internal functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
