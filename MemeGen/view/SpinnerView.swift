@@ -20,7 +20,6 @@ class SpinnerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func prepare() {
         self.backgroundColor = .darkGray.withAlphaComponent(0.7)
         self.addSubview(spinner)

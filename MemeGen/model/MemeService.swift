@@ -64,8 +64,7 @@ class MemeService: IMemeService {
     func getFullImage(forMeme memeName: String, topText: String, bottomText: String, completion: @escaping ImageResponseHandler) {
         guard let generatedURL = URL(string: (MemeService.urlForFullScreen.replacingOccurrences(of: "${memeName}", with: memeName).replacingOccurrences(of: "${top}", with: topText).replacingOccurrences(of: "${bottom}", with: bottomText))) else {
             return
-        } // добавь про top и bottom
-        print(generatedURL)
+        }
         
         downloadData(url: generatedURL) { result in
             switch result {

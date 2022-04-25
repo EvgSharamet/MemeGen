@@ -16,6 +16,7 @@ class ImageFullScreenController: UIViewController {
     var topTextField: UITextField?
     var bottomTextField: UITextField?
     var generatBattonTapListener: ((UIImage?) -> Void)?
+    var spinner: SpinnerView?
     
     private let memeService: IMemeService
     
@@ -43,6 +44,7 @@ class ImageFullScreenController: UIViewController {
         self.imageView = view.fullImageView
         self.topTextField = view.topTextField
         self.bottomTextField = view.bottomTextField
+        self.spinner = view.spinner
         
         view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
         
@@ -67,6 +69,7 @@ class ImageFullScreenController: UIViewController {
     }
     
     @objc private func generateButtonDidTap() {
+        showSpinner()
         guard let memeIndex = memeIndex else {
             return
         }
@@ -80,13 +83,27 @@ class ImageFullScreenController: UIViewController {
                 switch data {
                 case .success(let img):
                     DispatchQueue.main.async {
-                        self.imageView?.image = img
+                        self.hideSpinner()
+                        self.generatBattonTapListener?(img)
                     }
                     
-                case .failure(let error):
-                    print(error)
+                case .failure(_):
+                    DispatchQueue.main.async {
+                        self.hideSpinner()
+                        let alert = UIAlertController(title: "Warning", message: "Failed to create meme", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
             }
         }
+    }
+    
+    private func showSpinner() {
+        spinner?.isHidden = false
+    }
+    
+    private func hideSpinner() {
+        spinner?.isHidden = true
     }
 }

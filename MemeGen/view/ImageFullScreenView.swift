@@ -15,6 +15,7 @@ class ImageFullScreenView: UIView {
     let fullImageView = UIImageView()
     let topTextField = UITextField()
     let bottomTextField = UITextField()
+    let spinner = SpinnerView()
     
     private let blurView = UIView()
 
@@ -37,6 +38,7 @@ class ImageFullScreenView: UIView {
         setupCenterBlurView()
         setupCenterStackView()
         setupGenerateButton()
+        setupSpinnerView()
     }
     
     private func setupFullScreenView() {
@@ -130,5 +132,12 @@ class ImageFullScreenView: UIView {
             alpha: 1)
         generateButton.setTitle("Generate!", for: .normal)
         generateButton.titleLabel?.font = UIConst.fullScreenTopBottomLabelFont
+    }
+    
+    private func setupSpinnerView() {
+        self.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.stretchSafe()
+        spinner.isHidden = true
     }
 }

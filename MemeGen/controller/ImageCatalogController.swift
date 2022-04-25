@@ -59,15 +59,16 @@ class ImageCatalogController: UIViewController {
     
     func updateMemeList() {
         showSpinner()
-        print("qwerty")
         memeService.getMemeList { result in
             switch result {
             case .success(_):
-                print("HERE")
                 self.imageCollection?.reloadData()
                 self.hideSpinner()
-            case .failure(_): break
-                // showError
+            case .failure(_):
+                let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                break
             }
         }
     }
