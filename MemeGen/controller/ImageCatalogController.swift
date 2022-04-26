@@ -61,23 +61,23 @@ class ImageCatalogController: UIViewController {
     @objc func updateMemeList() {
         showSpinner()
         memeService.clearCache()
-        memeService.getMemeList { result in
-            switch result {
-            case .success(_):
-                DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            self.memeService.getMemeList { result in
+                switch result {
+                case .success(_):
                     self.imageCollection?.reloadData()
                     self.hideSpinner()
+                case .failure(_):
+                    self.hideSpinner()
+                    let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    break
                 }
-            case .failure(_):
-                self.hideSpinner()
-                let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                break
             }
         }
     }
-    
+
     private func showSpinner() {
         spinner?.isHidden = false
     }

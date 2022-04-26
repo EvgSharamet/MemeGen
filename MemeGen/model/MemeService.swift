@@ -114,7 +114,6 @@ class MemeService: IMemeService {
             completion(.failure((NSError(domain: "MemeService10", code: 0114))))
             return
         }
-        
         downloadData(url: url) { data in
             switch data {
             case .success(let rawStr):
