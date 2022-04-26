@@ -64,8 +64,10 @@ class ImageCatalogController: UIViewController {
         memeService.getMemeList { result in
             switch result {
             case .success(_):
-                self.imageCollection?.reloadData()
-                self.hideSpinner()
+                DispatchQueue.main.async {
+                    self.imageCollection?.reloadData()
+                    self.hideSpinner()
+                }
             case .failure(_):
                 self.hideSpinner()
                 let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)

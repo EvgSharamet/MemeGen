@@ -80,7 +80,7 @@ class MemeService: IMemeService {
     }
     
     func clearCache() {
-        self.memeList = []
+        self.memeList = nil
         self.images = [:]
     }
     
