@@ -137,7 +137,7 @@ class ImageFullScreenView: UIView {
     private func setupSpinnerView() {
         self.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.stretchSafe()
+        spinner.stretch()
         spinner.isHidden = true
     }
 }

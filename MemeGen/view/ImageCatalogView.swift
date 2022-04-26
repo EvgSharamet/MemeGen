@@ -18,6 +18,7 @@ class ImageCatalogView: UIView {
         return collectionView
     }()
     let appNameLabel = UILabel()
+    let updateButton = UIButton()
     let spinner = SpinnerView()
     
     //MARK: - public functions
@@ -37,6 +38,7 @@ class ImageCatalogView: UIView {
         self.backgroundColor = .systemGray6
         setupAppNameLabel()
         setupImageCollection()
+        setupUpdateButton()
         setupSpinnerView()
     }
     
@@ -61,10 +63,21 @@ class ImageCatalogView: UIView {
         imageCollection.backgroundColor = .systemGray6
     }
     
+    private func setupUpdateButton() {
+        self.addSubview(updateButton)
+        updateButton.translatesAutoresizingMaskIntoConstraints = false
+        updateButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -15).isActive = true
+        updateButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -10).isActive = true
+        updateButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        updateButton.backgroundColor = .purple
+        updateButton.layer.cornerRadius = 10
+        updateButton.setTitle("Update", for: .normal)
+    }
+    
     private func setupSpinnerView() {
         self.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.stretchSafe()
+        spinner.stretch()
         spinner.isHidden = true
     }
 }

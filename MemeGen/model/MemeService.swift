@@ -21,7 +21,7 @@ class MemeService: IMemeService {
     
     //MARK: - internal functions
     
-    func getMemeList(completion: @escaping MemeListResponseHandler){
+    func getMemeList(completion: @escaping MemeListResponseHandler) {
         if let memeList = memeList {
             completion(.success(memeList))
             return
@@ -29,17 +29,15 @@ class MemeService: IMemeService {
         updateMemeList(completion: completion)
     }
     
-    
     func getThumbnail(forMeme memeName: String, completion: @escaping ImageResponseHandler) {
         guard let generatedURL = URL(string: MemeService.urlForCollectionImage.replacingOccurrences(of: "${memeName}", with: memeName)) else {
             return
         }
-        
-        queue.async {
-            if let cached = self.images[memeName] {
-                completion(.success(cached))
-                return
-            }
+
+        let cached = queue.sync { self.images[memeName] }
+        if let cached = cached {
+            completion(.success(cached))
+            return
         }
         
         downloadData(url: generatedURL) { result in
@@ -50,7 +48,7 @@ class MemeService: IMemeService {
                     return
                 }
                 
-                self.queue.async {
+                self.queue.sync {
                     self.images[memeName] = img
                 }
                 completion(.success(img))
@@ -73,13 +71,17 @@ class MemeService: IMemeService {
                     completion(.failure(NSError(domain: "MemeService7", code: 000)))
                     return
                 }
-                self.images.updateValue(img, forKey:memeName)
                 completion(.success(img))
                 break
             case .failure(let error):
                 completion(.failure(error))
             }
         }
+    }
+    
+    func clearCache() {
+        self.memeList = []
+        self.images = [:]
     }
     
     //MARK: - private functions
@@ -108,24 +110,24 @@ class MemeService: IMemeService {
     }
     
     private func updateMemeList(completion: @escaping MemeListResponseHandler) {
-        URLSession.shared.dataTask(with: URL(string: "https://apimeme.com")!) { data, response, error in
-            if let error = error {
-                print("ERROR: \(error), ")
-                completion(.failure((NSError(domain: "MemeService1", code: 010))))
-                return
+        guard let url = URL(string: "https://apimeme.com") else {
+            completion(.failure((NSError(domain: "MemeService10", code: 0114))))
+            return
+        }
+        
+        downloadData(url: url) { data in
+            switch data {
+            case .success(let rawStr):
+                let str = String(decoding: rawStr, as: UTF8.self)
+                let memeList = self.parseMemes(src: str)
+                self.memeList = memeList
+                completion(.success(memeList))
+            case .failure(let error):
+                print(error)
+                completion(.failure(NSError(domain: "MemeService11", code: 0100)))
             }
-            
-            guard let data = data else {
-                print("no data")
-                completion(.failure((NSError(domain: "MemeService2", code: 011))))
-                return
-            }
-            let str = String(decoding: data, as: UTF8.self)
-            let memeList = self.parseMemes(src: str)
-            self.memeList = memeList
-            completion(.success(memeList))
-        }.resume()
+        }
     }
 }
-    
-    
+
+

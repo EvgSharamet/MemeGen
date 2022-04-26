@@ -47,7 +47,8 @@ class ImageCatalogController: UIViewController {
         self.imageCollection = view.imageCollection
         self.imageCollection?.isUserInteractionEnabled = true
         self.spinner = view.spinner
-        
+        view.updateButton.addTarget(self, action: #selector(updateMemeList), for: .touchUpInside)
+
         imageCollection?.dataSource = self
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
@@ -57,14 +58,16 @@ class ImageCatalogController: UIViewController {
         })
     }
     
-    func updateMemeList() {
+    @objc func updateMemeList() {
         showSpinner()
+        memeService.clearCache()
         memeService.getMemeList { result in
             switch result {
             case .success(_):
                 self.imageCollection?.reloadData()
                 self.hideSpinner()
             case .failure(_):
+                self.hideSpinner()
                 let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
@@ -72,8 +75,6 @@ class ImageCatalogController: UIViewController {
             }
         }
     }
-    
-    //MARK: - private functions
     
     private func showSpinner() {
         spinner?.isHidden = false
@@ -134,7 +135,6 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - private functions
     
     private func updateCell(at indexPath: IndexPath, withData data: ImageCatalogCell.CellData) {
-        
         guard let collectionView = imageCollection,
               let cell = collectionView.cellForItem(at: indexPath) as? ImageCatalogCell
         else {

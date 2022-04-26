@@ -80,8 +80,8 @@ class ImageFullScreenController: UIViewController {
             return
         }
         
-        if let top = topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-           let bottom = bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+        if let top = (topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let bottom = (bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             memeService.getFullImage(forMeme: memeName, topText: top, bottomText: bottom) { data in
                 switch data {
                 case .success(let img):
