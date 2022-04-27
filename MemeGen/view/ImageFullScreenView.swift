@@ -119,19 +119,14 @@ class ImageFullScreenView: UIView {
     private func setupGenerateButton() {
         self.addSubview(generateButton)
         generateButton.translatesAutoresizingMaskIntoConstraints = false
-        generateButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        generateButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
         generateButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        generateButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
-        generateButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        generateButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        generateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         generateButton.layer.masksToBounds = true
-        generateButton.layer.cornerRadius = 15
-        generateButton.backgroundColor = UIColor(
-            red: 123 / 255,
-            green: 36 / 255,
-            blue: 27 / 255,
-            alpha: 1)
+        generateButton.layer.cornerRadius = 10
+        generateButton.backgroundColor = .purple
         generateButton.setTitle("Generate!", for: .normal)
-        generateButton.titleLabel?.font = UIConst.fullScreenTopBottomLabelFont
     }
     
     private func setupSpinnerView() {

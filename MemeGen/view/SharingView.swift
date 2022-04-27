@@ -12,7 +12,8 @@ class SharingView: UIView {
     //MARK: - data
     
     let imageView = UIImageView()
-    let saveInLibraryButton = UIButton()
+    let saveButton = UIButton()
+    let sharingButton = UIButton()
     
     //MARK: - public functions
     
@@ -31,7 +32,8 @@ class SharingView: UIView {
         self.backgroundColor = .systemGray6
         setupLabel()
         setupImageView()
-        setupButtonsStack()
+        setupSaveButton()
+        setupSharingButton()
     }
     
     private func setupLabel() {
@@ -54,47 +56,34 @@ class SharingView: UIView {
         imageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 400).isActive = true
         imageView.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor, constant: -30).isActive = true
-        imageView.layer.cornerRadius = 40
+        imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
     }
     
-    private func setupButtonsStack() {
-        let stack = UIStackView()
-        self.addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -60).isActive = true
-        stack.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor, constant: -100).isActive = true
-        stack.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        stack.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        stack.distribution = .equalSpacing
-        
-        saveInLibraryButton.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(saveInLibraryButton)
-        saveInLibraryButton.layer.cornerRadius = 30
-        saveInLibraryButton.widthAnchor.constraint(equalTo: stack.heightAnchor).isActive = true
-        saveInLibraryButton.setBackgroundImage(UIImage(named: "saveInGallery"), for: .normal)
-        saveInLibraryButton.backgroundColor = .systemGray
-        saveInLibraryButton.layer.masksToBounds = true
-        saveInLibraryButton.backgroundColor = .white
-        
-        let instagramButton = UIButton()
-        instagramButton.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(instagramButton)
-        instagramButton.widthAnchor.constraint(equalTo: stack.heightAnchor).isActive = true
-        instagramButton.layer.cornerRadius = 30
-        instagramButton.backgroundColor = .lightGray
-        instagramButton.setBackgroundImage(UIImage(named: "instagram"), for: .normal)
-        instagramButton.layer.masksToBounds = true
-        
-        let facebookButton = UIButton()
-        facebookButton.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(facebookButton)
-        facebookButton.widthAnchor.constraint(equalTo: stack.heightAnchor).isActive = true
-        facebookButton.layer.cornerRadius = 30
-        facebookButton.backgroundColor = .darkGray
-        facebookButton.setBackgroundImage(UIImage(named: "facebook"), for: .normal)
-        facebookButton.layer.masksToBounds = true
+    private func setupSaveButton() {
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(saveButton)
+        saveButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        saveButton.layer.cornerRadius = 10
+        saveButton.backgroundColor = .purple
+        saveButton.layer.masksToBounds = true
+        saveButton.setTitle("Save", for: .normal)
+    }
+    
+    private func setupSharingButton() {
+        sharingButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(sharingButton)
+        sharingButton.leftAnchor.constraint(equalTo: saveButton.rightAnchor, constant: 30).isActive = true
+        sharingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sharingButton.widthAnchor.constraint(equalTo: sharingButton.heightAnchor).isActive = true
+        sharingButton.layer.cornerRadius = 25
+        sharingButton.backgroundColor = .clear
+        sharingButton.centerYAnchor.constraint(equalTo: saveButton.centerYAnchor).isActive = true
+        sharingButton.setImage(UIImage(named:"share"), for: .normal)
+        sharingButton.contentMode = .scaleAspectFill
     }
 }

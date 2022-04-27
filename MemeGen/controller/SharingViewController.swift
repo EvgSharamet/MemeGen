@@ -25,15 +25,25 @@ class SharingViewController: UIViewController {
             return
         }
         view.imageView.image = image
-        view.saveInLibraryButton.addTarget(self, action: #selector(saveInLibrary), for: .touchUpInside)
+        view.saveButton.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
+        view.sharingButton.addTarget(self, action: #selector(sharing), for: .touchUpInside)
     }
     
-    @objc private func saveInLibrary() {
+    @objc private func saveImage() {
+        guard let image = image else {
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
+    
+    @objc private func sharing() {
         guard let image = image else {
             return
         }
 
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        let items: [Any] = [image]
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(ac, animated: true)
     }
 }
 
