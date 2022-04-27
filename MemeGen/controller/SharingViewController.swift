@@ -22,8 +22,20 @@ class SharingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.stretch()
         guard let image = self.image else {
-             return 
+            return
         }
         view.imageView.image = image
+        view.saveInLibraryButton.addTarget(self, action: #selector(saveInLibrary), for: .touchUpInside)
     }
+    
+    @objc private func saveInLibrary() {
+        guard let image = image else {
+            return
+        }
+
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
+}
+
+extension SharingViewController: UIImagePickerControllerDelegate {
 }

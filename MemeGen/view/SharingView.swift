@@ -12,6 +12,7 @@ class SharingView: UIView {
     //MARK: - data
     
     let imageView = UIImageView()
+    let saveInLibraryButton = UIButton()
     
     //MARK: - public functions
     
@@ -69,15 +70,14 @@ class SharingView: UIView {
         stack.heightAnchor.constraint(equalToConstant: 60).isActive = true
         stack.distribution = .equalSpacing
         
-        let saveButton = UIButton()
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(saveButton)
-        saveButton.layer.cornerRadius = 30
-        saveButton.widthAnchor.constraint(equalTo: stack.heightAnchor).isActive = true
-        saveButton.setBackgroundImage(UIImage(named: "saveInGallery"), for: .normal)
-        saveButton.backgroundColor = .systemGray
-        saveButton.layer.masksToBounds = true
-        saveButton.backgroundColor = .white
+        saveInLibraryButton.translatesAutoresizingMaskIntoConstraints = false
+        stack.addArrangedSubview(saveInLibraryButton)
+        saveInLibraryButton.layer.cornerRadius = 30
+        saveInLibraryButton.widthAnchor.constraint(equalTo: stack.heightAnchor).isActive = true
+        saveInLibraryButton.setBackgroundImage(UIImage(named: "saveInGallery"), for: .normal)
+        saveInLibraryButton.backgroundColor = .systemGray
+        saveInLibraryButton.layer.masksToBounds = true
+        saveInLibraryButton.backgroundColor = .white
         
         let instagramButton = UIButton()
         instagramButton.translatesAutoresizingMaskIntoConstraints = false

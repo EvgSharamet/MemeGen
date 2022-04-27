@@ -12,7 +12,7 @@ class MemeService: IMemeService {
     //MARK: - data
     
     var memeList: [String]?
-    var images: [String: UIImage] = [:]
+    private var images: [String: UIImage] = [:]
     
     static let urlForFullScreen = "https://apimeme.com/meme?meme=${memeName}&top=${top}&bottom=${bottom}"
     static let urlForCollectionImage = "https://apimeme.com/thumbnail?name=${memeName}"

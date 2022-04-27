@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 extension UIView {
+    //MARK: - internal functions
+    
     func addSubview(_ subview: UIView, andStretchWithInsets insets: UIEdgeInsets) {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = false

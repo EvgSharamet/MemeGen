@@ -59,10 +59,10 @@ class ImageCatalogController: UIViewController {
     }
     
     @objc func updateMemeList() {
-        showSpinner()
-        memeService.clearCache()
-        DispatchQueue.main.async {
-            self.memeService.getMemeList { result in
+        self.showSpinner()
+        self.memeService.clearCache()
+        self.memeService.getMemeList { result in
+            DispatchQueue.main.async {
                 switch result {
                 case .success(_):
                     self.imageCollection?.reloadData()
