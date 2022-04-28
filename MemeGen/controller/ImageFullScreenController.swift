@@ -12,7 +12,6 @@ class ImageFullScreenController: UIViewController {
     //MARK: - data
     
     var memeIndex: Int?
-    var imageView: UIImageView?
     var topTextField: UITextField?
     var bottomTextField: UITextField?
     var generatBattonTapListener: ((UIImage?) -> Void)?
@@ -41,18 +40,12 @@ class ImageFullScreenController: UIViewController {
         view.stretch()
         hideKeyboardWhenTappedAround()
         
-        self.imageView = view.fullImageView
         self.topTextField = view.topTextField
         self.bottomTextField = view.bottomTextField
         self.spinner = view.spinner
-        
         view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
         
-        guard let memeIndex = memeIndex else {
-            return
-        }
-
-        guard let memeName = self.memeService.memeList?[memeIndex] else {
+        guard let memeIndex = memeIndex, let memeName = self.memeService.memeList?[memeIndex] else {
             return
         }
         
@@ -60,10 +53,13 @@ class ImageFullScreenController: UIViewController {
             switch data {
             case .success(let img):
                 DispatchQueue.main.async {
-                    self.imageView?.image = img
+                    view.fullImageView.image = img
                 }
             case .failure(let error):
                 print(error)
+                let alert = UIAlertController(title: "Warning", message: "Image download error: \(error)", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -83,17 +79,15 @@ class ImageFullScreenController: UIViewController {
         if let top = (topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
            let bottom = (bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             memeService.getFullImage(forMeme: memeName, topText: top, bottomText: bottom) { data in
-                switch data {
-                case .success(let img):
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    switch data {
+                    case .success(let img):
                         self.hideSpinner()
                         self.generatBattonTapListener?(img)
-                    }
-                    
-                case .failure(_):
-                    DispatchQueue.main.async {
+                        
+                    case .failure(let error):
                         self.hideSpinner()
-                        let alert = UIAlertController(title: "Warning", message: "Failed to create meme", preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: "Warning", message: "Failed to create meme:\(error)" , preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
@@ -101,7 +95,7 @@ class ImageFullScreenController: UIViewController {
             }
         }
     }
-    
+        
     private func showSpinner() {
         spinner?.isHidden = false
     }

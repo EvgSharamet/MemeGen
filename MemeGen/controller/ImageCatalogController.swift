@@ -38,7 +38,6 @@ class ImageCatalogController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemGray6
         let view = ImageCatalogView()
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
@@ -53,15 +52,17 @@ class ImageCatalogController: UIViewController {
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        memeService.getMemeList(completion: { result in
+        memeService.getMemeList(forceReload: false, completion: { result in
             DispatchQueue.main.async { self.imageCollection?.reloadData()}
         })
     }
     
-    @objc func updateMemeList() {
+    //MARK: - private functions
+    
+    @objc private func updateMemeList() {
         self.showSpinner()
         self.memeService.clearCache()
-        self.memeService.getMemeList { result in
+        self.memeService.getMemeList(forceReload: true) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):
@@ -72,7 +73,6 @@ class ImageCatalogController: UIViewController {
                     let alert = UIAlertController(title: "Warning", message: "Failed to update collection", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
-                    break
                 }
             }
         }
@@ -160,7 +160,6 @@ extension ImageCatalogController: UICollectionViewDelegateFlowLayout {
         
         let totalSpacing: CGFloat = 2 * spacing + (itemsInRow - 1) * spacing
         let finalWidth = (width - totalSpacing) / itemsInRow
-        
         return floor(finalWidth)
     }
     

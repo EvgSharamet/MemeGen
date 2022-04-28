@@ -17,7 +17,6 @@ class ImageCatalogView: UIView {
         collectionView.backgroundColor = .white
         return collectionView
     }()
-    let appNameLabel = UILabel()
     let updateButton = UIButton()
     let spinner = SpinnerView()
     
@@ -43,6 +42,7 @@ class ImageCatalogView: UIView {
     }
     
     private func setupAppNameLabel() {
+        let appNameLabel = UILabel()
         self.addSubview(appNameLabel)
         appNameLabel.translatesAutoresizingMaskIntoConstraints = false
         appNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true

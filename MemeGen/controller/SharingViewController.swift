@@ -29,6 +29,8 @@ class SharingViewController: UIViewController {
         view.sharingButton.addTarget(self, action: #selector(sharing), for: .touchUpInside)
     }
     
+    //MARK: - private functions
+    
     @objc private func saveImage() {
         guard let image = image else {
             return
@@ -47,5 +49,4 @@ class SharingViewController: UIViewController {
     }
 }
 
-extension SharingViewController: UIImagePickerControllerDelegate {
-}
+extension SharingViewController: UIImagePickerControllerDelegate { }

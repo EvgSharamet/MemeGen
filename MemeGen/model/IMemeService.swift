@@ -17,7 +17,7 @@ protocol IMemeService {
     
     var memeList: [String]? {get}
 
-    func getMemeList(completion: @escaping MemeListResponseHandler)
+    func getMemeList(forceReload: Bool, completion: @escaping MemeListResponseHandler)
     func getThumbnail(forMeme memeName: String, completion: @escaping ImageResponseHandler)
     func getFullImage(forMeme memeName: String, topText: String, bottomText: String, completion: @escaping ImageResponseHandler)
     func clearCache()

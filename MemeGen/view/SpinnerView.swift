@@ -29,7 +29,6 @@ class SpinnerView: UIView {
     private func prepare() {
         self.backgroundColor = .darkGray.withAlphaComponent(0.7)
         self.addSubview(spinner)
-        
         spinner.startAnimating()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.stretch()
