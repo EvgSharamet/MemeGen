@@ -14,8 +14,6 @@ protocol IMemeService {
     typealias MemeListResponseHandler = (MemeListResponse) -> Void
     typealias DownloadDataResponse = Result<Data, Error>
     typealias DownloadDataResponseHandler = (DownloadDataResponse) -> Void
-    
-    var memeList: [String]? {get}
 
     func getMemeList(forceReload: Bool, completion: @escaping MemeListResponseHandler)
     func getThumbnail(forMeme memeName: String, completion: @escaping ImageResponseHandler)

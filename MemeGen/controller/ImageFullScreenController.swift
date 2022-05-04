@@ -18,11 +18,13 @@ class ImageFullScreenController: UIViewController {
     var spinner: SpinnerView?
     
     private let memeService: IMemeService
+    private let cdService: CoreDataService
     
     //MARK: - public functions
     
-    init(memeService: IMemeService) {
+    init(memeService: IMemeService, cdService: CoreDataService) {
         self.memeService = memeService
+        self.cdService = cdService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,7 +33,7 @@ class ImageFullScreenController: UIViewController {
     }
     
     //MARK: - internal functions
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let view = ImageFullScreenView()
@@ -45,21 +47,24 @@ class ImageFullScreenController: UIViewController {
         self.spinner = view.spinner
         view.generateButton.addTarget(self, action: #selector(generateButtonDidTap), for: .touchUpInside)
         
-        guard let memeIndex = memeIndex, let memeName = self.memeService.memeList?[memeIndex] else {
+        guard let memeIndex = memeIndex else { // self.memeService.memeList?[memeIndex] else {
             return
         }
         
+        let memeName = (cdService.getMemes())[memeIndex].value(forKey: "name") as! String
+
         memeService.getThumbnail(forMeme: memeName) { data in
-            switch data {
-            case .success(let img):
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                
+                switch data {
+                case .success(let img):
                     view.fullImageView.image = img
+                case .failure(let error):
+                    print(error)
+                    let alert = UIAlertController(title: "Warning", message: "Image download error: \(error)", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
-            case .failure(let error):
-                print(error)
-                let alert = UIAlertController(title: "Warning", message: "Image download error: \(error)", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -71,10 +76,7 @@ class ImageFullScreenController: UIViewController {
         guard let memeIndex = memeIndex else {
             return
         }
-        
-        guard let memeName = memeService.memeList?[memeIndex] else {
-            return
-        }
+        let memeName = (cdService.getMemes())[memeIndex].value(forKey: "name") as! String
         
         if let top = (topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
            let bottom = (bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
@@ -95,7 +97,7 @@ class ImageFullScreenController: UIViewController {
             }
         }
     }
-        
+    
     private func showSpinner() {
         spinner?.isHidden = false
     }

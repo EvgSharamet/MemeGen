@@ -7,11 +7,19 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class MemeService: IMemeService {
-    //MARK: - data
+    //MARK: - types
     
-    var memeList: [String]?
+    struct MemeInfo {
+       let name: String
+    }
+    
+    //MARK: - data
+   // var memeList: [String]? = []
+    var list: [NSManagedObject] = []
+    let cdService = CoreDataService()
     
     private var images: [String: UIImage] = [:]
     private static let urlForFullScreen = "https://apimeme.com/meme?meme=${memeName}&top=${top}&bottom=${bottom}"
@@ -20,10 +28,24 @@ class MemeService: IMemeService {
                                       qos: .background, attributes: .concurrent)
     
     //MARK: - internal functions
+    func downloadMemeList() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+          return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Person")
+        
+        do {
+            self.list = try (managedContext.fetch(fetchRequest))
+        } catch let error as NSError {
+          print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
     
     func getMemeList(forceReload: Bool, completion: @escaping MemeListResponseHandler) {
-        if !forceReload, let memeList = memeList {
-            completion(.success(memeList))
+        if !forceReload {
+            completion(.success(memeList ?? []))
             return
         }
         updateMemeList(forceReload: forceReload, completion: completion)
@@ -122,7 +144,13 @@ class MemeService: IMemeService {
                 }
                 let str = String(decoding: rawStr, as: UTF8.self)
                 let memeList = self.parseMemes(src: str)
-                self.memeList = memeList
+                //  self.memeList = memeList
+                DispatchQueue.main.async {
+                    for name in memeList {
+                        self.cdService.save(name: name)
+                    }
+                }
+                print(memeList)
                 completion(.success(memeList))
             case .failure(let error):
                 print(error)

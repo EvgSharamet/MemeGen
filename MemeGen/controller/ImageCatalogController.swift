@@ -21,14 +21,16 @@ class ImageCatalogController: UIViewController {
     var cellTapListener: ((_ index: Int) -> Void)?
     
     private let memeService: IMemeService
+    private let cdService: CoreDataService
     private var imageCollection: UICollectionView?
     private var spinner: UIView?
     private static let identifier = "CollectionViewCell"
     
     //MARK: - internal functions
     
-    init(memeService: IMemeService) {
+    init(memeService: IMemeService, cdService: CoreDataService) {
         self.memeService = memeService
+        self.cdService = cdService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +63,6 @@ class ImageCatalogController: UIViewController {
     
     @objc private func updateMemeList() {
         self.showSpinner()
-        self.memeService.clearCache()
         self.memeService.getMemeList(forceReload: true) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -91,7 +92,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return memeService.memeList?.count ?? 0
+        return cdService.getMemes().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,12 +101,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
             return UICollectionViewCell()
         }
         
-        guard let memeList = memeService.memeList, memeList.indices.contains(indexPath.row)
-        else {
-            return cell
-        }
-        
-        let memeName = memeList[indexPath.row]
+        let memeName = (cdService.getMemes())[indexPath.row].value(forKey: "name") as! String
         
         let placeholderData = ImageCatalogCell.CellData(
             name: memeName,
