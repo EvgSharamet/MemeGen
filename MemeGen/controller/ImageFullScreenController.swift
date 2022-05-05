@@ -18,13 +18,11 @@ class ImageFullScreenController: UIViewController {
     var spinner: SpinnerView?
     
     private let memeService: IMemeService
-    private let cdService: CoreDataService
     
     //MARK: - public functions
     
-    init(memeService: IMemeService, cdService: CoreDataService) {
+    init(memeService: IMemeService) {
         self.memeService = memeService
-        self.cdService = cdService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,7 +49,7 @@ class ImageFullScreenController: UIViewController {
             return
         }
         
-        let memeName = (cdService.getMemes())[memeIndex].value(forKey: "name") as! String
+        let memeName = memeService.getMeme(at: memeIndex)?.name ?? "<name error>"
 
         memeService.getThumbnail(forMeme: memeName) { data in
             DispatchQueue.main.async {
@@ -76,7 +74,7 @@ class ImageFullScreenController: UIViewController {
         guard let memeIndex = memeIndex else {
             return
         }
-        let memeName = (cdService.getMemes())[memeIndex].value(forKey: "name") as! String
+        let memeName = memeService.getMeme(at: memeIndex)?.name ?? "<name error>"
         
         if let top = (topTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
            let bottom = (bottomTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines))?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {

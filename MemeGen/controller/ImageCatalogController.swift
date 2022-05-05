@@ -21,16 +21,14 @@ class ImageCatalogController: UIViewController {
     var cellTapListener: ((_ index: Int) -> Void)?
     
     private let memeService: IMemeService
-    private let cdService: CoreDataService
     private var imageCollection: UICollectionView?
     private var spinner: UIView?
     private static let identifier = "CollectionViewCell"
     
     //MARK: - internal functions
     
-    init(memeService: IMemeService, cdService: CoreDataService) {
+    init(memeService: IMemeService) {
         self.memeService = memeService
-        self.cdService = cdService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,21 +47,27 @@ class ImageCatalogController: UIViewController {
         self.imageCollection?.isUserInteractionEnabled = true
         self.spinner = view.spinner
         view.updateButton.addTarget(self, action: #selector(updateMemeList), for: .touchUpInside)
-
+        
         imageCollection?.dataSource = self
         imageCollection?.delegate = self
         imageCollection?.register(ImageCatalogCell.self, forCellWithReuseIdentifier: ImageCatalogController.identifier)
         
-        memeService.getMemeList(forceReload: false, completion: { result in
-            DispatchQueue.main.async { self.imageCollection?.reloadData()}
-        })
+        memeService.loadMemeList { _ in
+            DispatchQueue.main.async {
+                guard self.memeService.memeCount > 0 else {
+                    self.updateMemeList()
+                    return
+                }
+                self.imageCollection?.reloadData()
+            }
+        }
     }
     
     //MARK: - private functions
     
     @objc private func updateMemeList() {
-        self.showSpinner()
-        self.memeService.getMemeList(forceReload: true) { result in
+        showSpinner()
+        memeService.updateMemeList { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):
@@ -92,7 +96,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
     //MARK: - internal functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cdService.getMemes().count
+        return memeService.memeCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -101,7 +105,7 @@ extension ImageCatalogController: UICollectionViewDataSource, UICollectionViewDe
             return UICollectionViewCell()
         }
         
-        let memeName = (cdService.getMemes())[indexPath.row].value(forKey: "name") as! String
+        let memeName = memeService.getMeme(at: indexPath.row)?.name ?? "<name error>"
         
         let placeholderData = ImageCatalogCell.CellData(
             name: memeName,
