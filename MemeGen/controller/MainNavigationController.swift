@@ -28,6 +28,13 @@ class MainNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let splash = SplashViewController()
+        splash.completionDelegate = onSplashAnimationCompleted
+        pushViewController(splash, animated: true)
+    }
+    
+    func onSplashAnimationCompleted() {
+        super.viewDidLoad()
         let collectionWindow = ImageCatalogController(memeService: self.memeService)
         collectionWindow.cellTapListener = openFullScreen
         pushViewController(collectionWindow, animated: true)
