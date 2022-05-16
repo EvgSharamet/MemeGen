@@ -37,7 +37,8 @@ class MainNavigationController: UINavigationController {
         super.viewDidLoad()
         let collectionWindow = ImageCatalogController(memeService: self.memeService)
         collectionWindow.cellTapListener = openFullScreen
-        pushViewController(collectionWindow, animated: true)
+        collectionWindow.modalPresentationStyle = .fullScreen
+        setViewControllers([collectionWindow], animated: true)
     }
 
     func openFullScreen(_ index: Int) {

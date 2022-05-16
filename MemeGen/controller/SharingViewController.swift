@@ -12,6 +12,7 @@ class SharingViewController: UIViewController {
     //MARK: - data
     
     var image: UIImage?
+    var popupView: UIView?
     
     //MARK: - internal functions
     
@@ -24,6 +25,7 @@ class SharingViewController: UIViewController {
         guard let image = self.image else {
             return
         }
+        self.popupView = view.popupView
         view.imageView.image = image
         view.saveButton.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
         view.sharingButton.addTarget(self, action: #selector(sharing), for: .touchUpInside)
@@ -36,6 +38,7 @@ class SharingViewController: UIViewController {
             return
         }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        showPopup()
     }
     
     @objc private func sharing() {
@@ -46,6 +49,17 @@ class SharingViewController: UIViewController {
         let items: [Any] = [image]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
+    }
+    
+    private func showPopup() {
+        UIView.animateKeyframes(withDuration: 1.4, delay: 0) {
+            UIView.addKeyframe(withRelativeStartTime: 0 , relativeDuration: 1/7) {
+                self.popupView?.alpha = 1
+            }
+            UIView.addKeyframe(withRelativeStartTime: 6/7, relativeDuration: 1/7) {
+                self.popupView?.alpha = 0
+            }
+        }
     }
 }
 

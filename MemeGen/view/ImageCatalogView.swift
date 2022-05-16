@@ -67,7 +67,7 @@ class ImageCatalogView: UIView {
         self.addSubview(updateButton)
         updateButton.translatesAutoresizingMaskIntoConstraints = false
         updateButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -15).isActive = true
-        updateButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -10).isActive = true
+        updateButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -15).isActive = true
         updateButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         updateButton.backgroundColor = .purple
         updateButton.layer.cornerRadius = 10

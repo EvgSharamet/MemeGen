@@ -14,6 +14,7 @@ class SharingView: UIView {
     let imageView = UIImageView()
     let saveButton = UIButton()
     let sharingButton = UIButton()
+    let popupView = UIView()
     
     //MARK: - public functions
     
@@ -34,6 +35,7 @@ class SharingView: UIView {
         setupImageView()
         setupSaveButton()
         setupSharingButton()
+        setupPopupLabel()
     }
     
     private func setupLabel() {
@@ -85,5 +87,31 @@ class SharingView: UIView {
         sharingButton.centerYAnchor.constraint(equalTo: saveButton.centerYAnchor).isActive = true
         sharingButton.setImage(UIImage(named:"share"), for: .normal)
         sharingButton.contentMode = .scaleAspectFill
+    }
+    
+    private func setupPopupLabel() {
+        popupView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(popupView)
+        popupView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+        popupView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true
+        popupView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        popupView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        popupView.layer.masksToBounds = true
+        popupView.layer.cornerRadius = 10
+        
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        popupView.addSubview(blurEffectView)
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectView.stretch()
+        
+        let popupLabel = UILabel()
+        popupView.addSubview(popupLabel)
+        popupLabel.translatesAutoresizingMaskIntoConstraints = false
+        popupLabel.stretch()
+        popupLabel.backgroundColor = .clear
+        popupLabel.text = "Picture saved!"
+        popupLabel.textAlignment = .center
+        
+        popupView.alpha = 0
     }
 }
